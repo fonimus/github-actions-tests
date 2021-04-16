@@ -1,21 +1,28 @@
-name: Generate changelog
-
+name: create-release
 on:
   push:
-    branches:
+    tags:
       - '**'
 
 jobs:
-  generate-changelog:
+  release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-                fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Generate changelog
         id: changelog
         uses: metcalfc/changelog-generator@v1.0.0
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
-      - name: Display changelog
-        run: echo ${{ steps.changelog.outputs.changelog }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
