@@ -1,0 +1,20 @@
+name: Generate changelog
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  generate-changelog:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - uses: heinrichreimer/github-changelog-generator-action@v2.1.1
+      id: generate
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Display changelog
+      run: echo ${{ steps.generate.outputs.changelog }}
