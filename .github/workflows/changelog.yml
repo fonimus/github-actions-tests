@@ -11,13 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+                fetch-depth: 0
       - name: Generate changelog
         id: changelog
         uses: metcalfc/changelog-generator@v1.0.0
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
-          head-ref: 'master'
-          base-ref: '1.0.0'
       - name: Display changelog
         run: echo ${{ steps.changelog.outputs.changelog }}
