@@ -19,7 +19,12 @@ jobs:
           myToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Is Pre Release ?
         id: pre-release
-        run: if [[ $(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]') =~ '.*(rc|beta|alpha).*' ]]; then echo '::set-output name=pre-release::true'; else echo '::set-output name=pre-release::false' ; fi
+        run: |
+          echo ${{ github.ref }}
+          echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]'
+          [[ $(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]') =~ '.*(rc|beta|alpha).*' ]]
+          echo $?
+          if [[ $(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]') =~ '.*(rc|beta|alpha).*' ]]; then echo '::set-output name=pre-release::true'; else echo '::set-output name=pre-release::false' ; fi
       - name: Create Release
         id: create-release
         uses: actions/create-release@latest
