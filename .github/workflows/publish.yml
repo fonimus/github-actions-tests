@@ -22,8 +22,8 @@ jobs:
         run: |
           echo ${{ github.ref }}
           echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]'
-          [[ $(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]') =~ '.*(rc|beta|alpha).*' ]]
-          echo $?
+          echo $(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]')
+          if [[ $(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]') =~ '.*(rc|beta|alpha).*' ]]; then echo 'PRE-RELEASE'; else echo 'NOT PRE RELEASE' ; fi
           if [[ $(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]') =~ '.*(rc|beta|alpha).*' ]]; then echo '::set-output name=pre-release::true'; else echo '::set-output name=pre-release::false' ; fi
       - name: Create Release
         id: create-release
