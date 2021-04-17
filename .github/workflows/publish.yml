@@ -21,8 +21,15 @@ jobs:
         id: pre-release
         shell: bash
         run: |
-          if [[ $(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]') =~ 'refs/tags/.*(rc|beta|alpha).*' ]]; then echo 'PRE-RELEASE'; else echo 'NOT PRE RELEASE' ; fi
-          if [[ $(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]') =~ 'refs/tags/.*(rc|beta|alpha).*' ]]; then echo '::set-output name=pre-release::true'; else echo '::set-output name=pre-release::false' ; fi
+          export tag=$(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]')
+          echo $tag
+          if [[ $tag =~ ^refs/tags/[0-9]+\.[0-9]+\.[0-9]+.*(rc|beta|alpha).* ]]; then
+            echo 'PRE-RELEASE'
+            echo ::set-output name=pre-release::true
+          else 
+            echo 'STD'
+            echo ::set-output name=pre-release::false
+          fi
       - name: Create Release
         id: create-release
         uses: actions/create-release@latest
