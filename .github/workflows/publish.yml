@@ -12,22 +12,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
-      - name: Fetch changes
-        run: git fetch --prune --unshallow
-
-      - name: Create changelogs
-        id: changelogs
+      - name: Is Pre Release ?
+        id: pre_release
         uses: heineiuo/create-changelogs@v0.2.8
-
+      - name: Generate changelog
+        id: changelog
+        uses: metcalfc/changelog-generator@v1.0.0
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Release
-        id: create_release
+        id: create-release
         uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          body: ${{ steps.changelogs.outputs.changelog_text }}
+          release_name: Release ${{ github.ref }}
+          body: ${{ steps.changelog.outputs.changelog }}
           draft: false
-          prerelease: ${{ steps.changelogs.outputs.release_type == 'prerelease' }}
+          prerelease: ${{ steps.pre_release.outputs.release_type == 'prerelease' }}
