@@ -12,14 +12,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        
       - name: Is Pre Release ?
         id: pre_release
         uses: heineiuo/create-changelogs@v0.2.8
-      - name: Generate changelog
+        
+      #- name: Generate changelog
+      #  id: changelog
+      #  uses: metcalfc/changelog-generator@v1.0.0
+      #  with:
+      #    myToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Changelog
         id: changelog
-        uses: metcalfc/changelog-generator@v1.0.0
-        with:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
+        uses: mikepenz/release-changelog-builder-action@v1.7.2
+        #with:
+        #  configuration: "configuration.json"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: Create Release
         id: create-release
         uses: actions/create-release@latest
