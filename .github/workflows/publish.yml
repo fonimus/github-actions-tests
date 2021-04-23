@@ -37,22 +37,3 @@ jobs:
           body: ${{ steps.changelog.outputs.changelog }}
           draft: false
           prerelease: ${{ steps.pre_release.outputs.release_type == 'prerelease' }}
-          
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: master
-        
-      - name: Update CHANGLOG.md
-        run: |
-          export changeLog=$(echo ${{ steps.changelog.outputs.changelog }} | sed -e "s/##/###/g")
-          export toImport="## [${GITHUB_REF##*/}](https://github.com/${{ github.repository }}/releases/tag/${GITHUB_REF##*/})\n\n$changeLog"
-          export allFile=$(sed "/^##/i $toImport\n" CHANGELOG.md)
-          echo $allFile > CHANGELOG.md
-          cat CHANGELOG.md
-          
-      - name: Add and commit
-        uses: EndBug/add-and-commit@v7.0.0
-        with:
-          add: CHANGELOG.md --force
-          message: Add release ${GITHUB_REF##*/} in CHANGLOG.md
