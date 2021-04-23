@@ -22,7 +22,7 @@
     ],
     "sort": "ASC",
     "template": "${{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n${{UNCATEGORIZED}}\n</details>",
-    "pr_template": "- ${{TITLE}} - PR : #${{NUMBER}}",
+    "pr_template": "- PR : #${{NUMBER}} - ${{TITLE}}\n    - Author: {{AUTHOR}}\n    - Reviewers: {{REVIEWERS}}\n    - Body: {{BODY}}",
     "empty_template": "No changes",
     "label_extractor": [
       {
