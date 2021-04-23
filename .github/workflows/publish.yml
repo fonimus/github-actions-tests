@@ -38,6 +38,11 @@ jobs:
           draft: false
           prerelease: ${{ steps.pre_release.outputs.release_type == 'prerelease' }}
           
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: master
+        
       - name: Update CHANGLOG.md
         run: |
           export changeLog=$(echo ${{ steps.changelog.outputs.changelog }} | sed -e "s/##/###/g")
@@ -49,6 +54,5 @@ jobs:
       - name: Add and commit
         uses: EndBug/add-and-commit@v7.0.0
         with:
-          branch: master
           add: CHANGELOG.md --force
           message: Add release ${GITHUB_REF##*/} in CHANGLOG.md
