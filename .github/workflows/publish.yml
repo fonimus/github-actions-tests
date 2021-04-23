@@ -42,7 +42,8 @@ jobs:
         run: |
           export changeLog=$(echo ${{ steps.changelog.outputs.changelog }} | sed -e "s/##/###/g")
           export toImport="## [${GITHUB_REF##*/}](https://github.com/${{ github.repository }}/releases/tag/${GITHUB_REF##*/})\n\n$changeLog"
-          sed "/^##/i $toImport\n" CHANGELOG.md > CHANGELOG.md
+          export allFile=$(sed "/^##/i $toImport\n" CHANGELOG.md)
+          echo $allFile > CHANGELOG.md
           cat CHANGELOG.md
           
       - name: Add and commit
@@ -50,4 +51,3 @@ jobs:
         with:
           branch: master
           message: Add release ${GITHUB_REF##*/} in CHANGLOG.md
-          default_author: github-actions
