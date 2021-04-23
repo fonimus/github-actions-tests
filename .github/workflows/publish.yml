@@ -37,3 +37,8 @@ jobs:
           body: ${{ steps.changelog.outputs.changelog }}
           draft: false
           prerelease: ${{ steps.pre_release.outputs.release_type == 'prerelease' }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: origin/master
