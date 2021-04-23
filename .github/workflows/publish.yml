@@ -50,4 +50,5 @@ jobs:
         uses: EndBug/add-and-commit@v7.0.0
         with:
           branch: master
+          add: CHANGELOG.md --force
           message: Add release ${GITHUB_REF##*/} in CHANGLOG.md
