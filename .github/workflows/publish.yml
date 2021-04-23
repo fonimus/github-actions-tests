@@ -37,3 +37,15 @@ jobs:
           body: ${{ steps.changelog.outputs.changelog }}
           draft: false
           prerelease: ${{ steps.pre_release.outputs.release_type == 'prerelease' }}
+          
+      - name: Update CHANGLOG.md
+        run: |
+          echo ${{ github.ref }}
+          echo ${{ github.repository }}
+          export changeLog=$(echo ${{ steps.changelog.outputs.changelog }} | sed -e "s/##/###/g")
+          export toImport="## [${{ github.ref }}](https://github.com/${{ github.repository }}/releases/tag/${{ github.ref }})\n\n$changeLog"
+          echo $toImport
+          sed "/^##/i $toImport\n" CHANGELOG.md
+          cat CHANGELOG.md
+          
+          
