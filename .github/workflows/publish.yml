@@ -38,7 +38,10 @@ jobs:
           draft: false
           prerelease: ${{ steps.pre_release.outputs.release_type == 'prerelease' }}
 
+      - name: Set environment variables
+        run: echo "BASE_BRANCH=master" >> $GITHUB_ENV
+      
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: origin/master
+          ref: ${{ env.BASE_BRANCH }}
