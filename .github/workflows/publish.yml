@@ -16,18 +16,28 @@ jobs:
       - name: Is Pre Release ?
         id: pre_release
         uses: heineiuo/create-changelogs@v0.2.8
-        
-      #- name: Generate changelog
-      #  id: changelog
-      #  uses: metcalfc/changelog-generator@v1.0.0
-      #  with:
-      #    myToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Changelog
         id: changelog
         uses: mikepenz/release-changelog-builder-action@v1.7.2
-        #with:
-        #  configuration: "configuration.json"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Print
+        run: echo ${{steps.github_release.outputs.changelog}}
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body: ${{steps.github_release.outputs.changelog}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
