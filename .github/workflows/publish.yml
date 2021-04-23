@@ -40,10 +40,8 @@ jobs:
           
       - name: Update CHANGLOG.md
         run: |
-          echo ${GITHUB_REF##*/}
-          export tag=echo ${GITHUB_REF##*/}
           export changeLog=$(echo ${{ steps.changelog.outputs.changelog }} | sed -e "s/##/###/g")
-          export toImport="## [$tag](https://github.com/${{ github.repository }}/releases/tag/$tag)\n\n$changeLog"
+          export toImport="## [${GITHUB_REF##*/}](https://github.com/${{ github.repository }}/releases/tag/${GITHUB_REF##*/})\n\n$changeLog"
           sed "/^##/i $toImport\n" CHANGELOG.md > CHANGELOG.md
           cat CHANGELOG.md
           
