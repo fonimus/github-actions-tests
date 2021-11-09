@@ -16,13 +16,15 @@ jobs:
   build:
     name: Build and test
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' && (github.event_name == 'push' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')) }}
     steps:
       - name: Some echo
         run: |
-          echo ${{ github.event.workflow_run.conclusion }}
-          echo ${{ github.event_name }}
-          echo ${{ github.actor != 'dependabot[bot]' }}
-          echo ${{ github.actor != 'dependabot[bot]' && github.event.workflow_run.conclusion == 'success' }}
+          echo Properties :
+          echo actor : ${{ github.actor }}
+          echo conclusion : ${{ github.event.workflow_run.conclusion }}
+          echo event name : ${{ github.event_name }}
+          echo should run : ${{ github.actor != 'dependabot[bot]' && (github.event_name == 'push' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')) }}
       - uses: actions/checkout@v2
       - name: Set up JDK 11
         uses: actions/setup-java@v1
