@@ -8,7 +8,7 @@ on:
       - '**.md'
   workflow_dispatch:
   workflow_run:
-    workflows: ["Dependabot"]
+    workflows: [ "Dependabot" ]
     types:
       - completed
 
@@ -27,18 +27,18 @@ jobs:
         with:
           java-version: 11
       - name: Cache maven repository
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-maven-
-
-      - name: Cache sonar packages
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
 
-      - name: Build and analyze
-        run: mvn -B -ntp install -Dtoken=${{ secrets.TEST_TOKEN }}
+        - name: Cache sonar packages
+          uses: actions/cache@v1
+          with:
+            path: ~/.sonar/cache
+            key: ${{ runner.os }}-sonar
+            restore-keys: ${{ runner.os }}-sonar
+
+        - name: Build and analyze
+          run: mvn -B -ntp install -Dtoken=${{ secrets.TEST_TOKEN }}
