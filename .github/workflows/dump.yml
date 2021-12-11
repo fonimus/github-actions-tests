@@ -1,0 +1,33 @@
+name: Dump
+
+on:
+  create:
+  delete:
+  deployment:
+  deployment_status:
+  project:
+  push:
+  pull_request:
+  discussion:
+  pull_request_review:
+  pull_request_review_comment:
+  pull_request_target:
+  watch:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  test:
+    name: Dump
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump useful info
+        run: |
+          echo ${{ github.event.repository.name }}
+          echo ${{ github.event_name }}
+        shell: bash
+      - name: Dump github context
+        run: echo "$GITHUB_CONTEXT"
+        shell: bash
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
