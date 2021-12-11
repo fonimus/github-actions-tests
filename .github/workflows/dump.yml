@@ -29,8 +29,9 @@ jobs:
     steps:
       - name: Dump useful info
         run: |
-          echo ${{ github.event.repository.name }}
-          echo ${{ github.event_name }}
+          echo "Repo name : ${{ github.event.repository.name }}"
+          echo "Input proj name : ${{ inputs.project_name }}"
+          echo "Event name : ${{ github.event_name }}"
         shell: bash
       - name: Dump github context
         run: echo "$GITHUB_CONTEXT"
