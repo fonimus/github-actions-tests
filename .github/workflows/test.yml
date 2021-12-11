@@ -1,0 +1,9 @@
+name: Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Test
+    uses: fonimus/github-actions-tests/.github/workflows/dump.yml@main

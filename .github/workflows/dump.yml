@@ -20,6 +20,11 @@ jobs:
     name: Dump
     runs-on: ubuntu-latest
     steps:
+      - name: Dump useful info
+        run: |
+          echo ${{ github.event.repository.name }}
+          echo ${{ github.event_name }}
+        shell: bash
       - name: Dump github context
         run: echo "$GITHUB_CONTEXT"
         shell: bash
