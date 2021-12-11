@@ -8,5 +8,3 @@ jobs:
     name: Build
     if: ${{ github.actor == 'dependabot[bot]' }}
     uses: fonimus/github-actions-tests/.github/workflows/reusable-build.yml@main
-    with:
-      sonar_analysis: false
