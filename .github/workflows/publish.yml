@@ -12,13 +12,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          ref: master
         
       - name: Is Pre Release ?
         id: pre_release
         uses: heineiuo/create-changelogs@v0.2.8
-
+        
       - name: Build Changelog
         id: changelog
         uses: mikepenz/release-changelog-builder-action@v1
@@ -26,7 +24,7 @@ jobs:
           configuration: .changelog-generator.json
           ignorePreReleases: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Create Release
         id: create-release
@@ -39,11 +37,3 @@ jobs:
           body: ${{ steps.changelog.outputs.changelog }}
           draft: false
           prerelease: ${{ steps.pre_release.outputs.release_type == 'prerelease' }}
-
-      - name: Set environment variables
-        run: echo "BASE_BRANCH=master" >> $GITHUB_ENV
-      
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ env.BASE_BRANCH }}
