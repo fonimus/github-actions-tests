@@ -9,4 +9,4 @@ on:
 jobs:
   build:
     name: Test
-    uses: fonimus/github-actions-tests/.github/workflows/reusable-build.yml@main
+    uses: fonimus/github-actions-tests/.github/workflows/dump.yml@main
