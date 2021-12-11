@@ -15,6 +15,12 @@ on:
   watch:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      project_name:
+        default: ${{ github.event.repository.name }}
+        required: false
+        type: string
+        description: Project name, used as prefix
 
 jobs:
   test:
