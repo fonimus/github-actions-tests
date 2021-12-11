@@ -30,7 +30,7 @@ jobs:
       - name: Dump useful info
         run: |
           echo "Repo name : ${{ github.event.repository.name }}"
-          echo "Input proj name : ${{ inputs.project_name }}"
+          echo "Input proj name : ${{ inputs.project_name !== '' ? inputs.project_name : github.event.repository.name }}"
           echo "Event name : ${{ github.event_name }}"
         shell: bash
       - name: Dump github context
