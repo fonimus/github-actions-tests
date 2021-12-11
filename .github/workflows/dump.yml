@@ -30,17 +30,14 @@ jobs:
       - name: Dump useful info
         run: |
           echo "Repo name : ${{ github.event.repository.name }}"
-          echo "Input proj name : ${{ inputs.project_name !== '' ? inputs.project_name : github.event.repository.name }}"
+          echo "Input proj name : ${{ inputs.project_name }}"
           echo "Event name : ${{ github.event_name }}"
-        shell: bash
       - name: Dump github context
         run: echo "$GITHUB_CONTEXT"
-        shell: bash
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
       - name: Dump github context in file
         run: echo "$GITHUB_CONTEXT" > github.env.json
-        shell: bash
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
       - name: Archive build artifacts
