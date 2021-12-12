@@ -1,6 +1,11 @@
 name: Pull Request Labeler
 
 on:
+  workflow_call:
+    secrets:
+      GITHUB_TOKEN:
+        required: true
+        description: Github token to be able to modify pull request
   pull_request:
     types: [opened]
 
