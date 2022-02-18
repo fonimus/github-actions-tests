@@ -6,7 +6,12 @@ on:
       - '**'
   workflow_dispatch:
 
+env:
+  TEST: test from env
+
 jobs:
   build:
     name: Test
     uses: fonimus/github-actions-tests/.github/workflows/dump.yml@main
+    with:
+      other_input: "$TEST"

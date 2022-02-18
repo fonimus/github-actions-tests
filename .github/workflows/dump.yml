@@ -21,6 +21,10 @@ on:
         required: false
         type: string
         description: Project name, used as prefix
+      other_input:
+        required: true
+        type: string
+        description: Other input
 
 jobs:
   test:
@@ -31,6 +35,7 @@ jobs:
         run: |
           echo "Repo name : ${{ github.event.repository.name }}"
           echo "Input proj name : ${{ inputs.project_name }}"
+          echo "Other input : ${{ inputs.other_input }}"
           echo "Event name : ${{ github.event_name }}"
       - name: Dump github context
         run: echo "$GITHUB_CONTEXT"
