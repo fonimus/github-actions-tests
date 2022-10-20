@@ -16,8 +16,6 @@ jobs:
     steps:
       - name: Set Environment Variables
         uses: tw3lveparsecs/github-actions-setvars@v0.1
-        with:
-          envFilePath: ./.github/variables/vars.env
       - name: List env
         run: env
 
