@@ -1,0 +1,30 @@
+name: Vars
+
+on:
+  push:
+    branches:
+      - '**'
+  workflow_dispatch:
+
+env:
+  VAR_3: value3
+
+jobs:
+  vars:
+    name: Vars
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Environment Variables
+        uses: tw3lveparsecs/github-actions-setvars@v0.1
+        with:
+          envFilePath: ./drop/.github/variables/*
+      - name: List env
+        run: env
+
+  other-vars:
+    needs: [ vars ]
+    name: Other Vars
+    runs-on: ubuntu-latest
+    steps:
+      - name: List env
+        run: env
