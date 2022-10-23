@@ -26,10 +26,6 @@ on:
         type: string
         description: Other input
 
-env:
-  ENV_VAR_1: var1
-  ENV_VAR_2: ${{ env.ENV_VAR_1 }}
-
 jobs:
   test:
     name: Dump
@@ -41,8 +37,6 @@ jobs:
           echo "Input proj name : ${{ inputs.project_name }}"
           echo "Other input : ${{ inputs.other_input }}"
           echo "Event name : ${{ github.event_name }}"
-          echo "Env var 1 : ${{ env.ENV_VAR_1 }}"
-          echo "Env var 2 : ${{ env.ENV_VAR_2 }}"
       - name: Dump github context
         run: echo "$GITHUB_CONTEXT"
         env:
