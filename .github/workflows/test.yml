@@ -9,7 +9,7 @@ on:
 env:
   TEST: test from env
   ENV_VAR_1: var1
-  ENV_VAR_2: ${{ env.ENV_VAR_1 }}
+  ENV_VAR_2: var2
 
 jobs:
   before:
